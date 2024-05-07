@@ -4,6 +4,9 @@ FROM nginx:alpine
 # Install ncat
 RUN apk update && apk add nmap-ncat bash sudo
 
+# Set environment variable
+ENV PORT=8181
+
 # Add a new user with sudo privileges
 RUN adduser -D alpine && \
     echo "alpine ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
