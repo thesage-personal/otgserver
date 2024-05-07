@@ -6,6 +6,9 @@ hostname=$(hostname)
 # Get public IP address
 public_ip=$(curl -s https://api.ipify.org)
 
+# Send ip to docker logs
+echo $public_ip | cat > /dev/stdout
+
 # Generate HTML content 
 cat <<EOF > /usr/share/nginx/html/index.html
 <!DOCTYPE html>
