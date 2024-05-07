@@ -8,8 +8,11 @@ RUN apk update && apk add nmap-ncat bash sudo
 RUN adduser -D alpine && \
     echo "alpine ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
+# Set the working directory
+WORKDIR /workspace
+
 # Copy script to container
-COPY entry.sh /tmp/entry.sh
+COPY entry.sh /workspace/entry.sh
 
 EXPOSE 80 8181
 
@@ -17,4 +20,4 @@ EXPOSE 80 8181
 CMD ["nginx", "-g", "daemon off;"]
 
 # Make HTML content
-CMD [ "/bin/bash", "/tmp/entry.sh" ]
+CMD [ "/bin/bash", "/workspace/entry.sh" ]
