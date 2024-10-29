@@ -1,5 +1,5 @@
-# Use Debian stable slim as the base image
-FROM debian:stable-slim
+# Use Debian bullseye as the base image
+FROM debian:bullseye
 
 # Install curl, sudo, and bash
 RUN apt-get update && \
