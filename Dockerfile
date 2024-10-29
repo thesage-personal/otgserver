@@ -1,26 +1,13 @@
-# Use Alpine Linux as base image
-FROM nginx:alpine
+# Use Debian stable slim as the base image
+FROM debian:stable-slim
 
-# Install ncat
-RUN apk update && apk add nmap-ncat bash sudo
+# Install curl, sudo, and bash
+RUN apt-get update && \
+    apt-get install -y curl sudo bash && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set environment variable
-ENV PORT=8181
+# Run the CasaOS installation script
+RUN curl -fsSL https://get.casaos.io | sudo bash
 
-# Add a new user with sudo privileges
-RUN adduser -D alpine && \
-    echo "alpine ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
-# Set the working directory
-WORKDIR /workspace
-
-# Copy script to container
-COPY entry.sh /workspace/entry.sh
-
-EXPOSE 80 8181
-
-# Start nginx server
-CMD ["nginx", "-g", "daemon off;"]
-
-# Make HTML content
-CMD [ "/bin/bash", "/workspace/entry.sh" ]
+# Default command
+CMD ["bash"]
